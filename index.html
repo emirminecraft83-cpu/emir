@@ -1,386 +1,86 @@
-domate<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emir'in Biyografi ve Proje Merkezi</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    
-    <style>
-        /* CSS Değişkenleri */
-        :root {
-            --pixel-font: 'Press Start 2P', cursive;
-            --primary-color: #00ff88; /* Neon Yeşil */
-            --secondary-color: #ff0077; /* Neon Pembe */
-            --dark-bg: #1a1a2e; /* Koyu Mavi */
-            --light-text: #f4f4f4;
-        }
-
-        /* Temel Sıfırlama ve Pixel Font Ayarı */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: var(--dark-bg);
-            color: var(--light-text);
-            /* Fortnite Arka Planı */
-            background-image: url('fortnite-bg.jpg'); /* Görseli aynı klasöre koyun */
-            background-size: cover;
-            background-attachment: fixed;
-        }
-
-        h1, h2, h3, .logo, button, .btn {
-            font-family: var(--pixel-font);
-            color: var(--primary-color);
-            text-shadow: 0 0 5px var(--primary-color);
-        }
-
-        /* Düzenleyici Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* HEADER & Navigasyon */
-        header {
-            background-color: rgba(0, 0, 0, 0.85); /* Hafif şeffaf koyu zemin */
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--secondary-color);
-        }
-
-        .logo {
-            font-size: 1.2rem;
-            margin-left: 20px;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: var(--light-text);
-            font-family: var(--pixel-font);
-            padding: 10px 15px;
-            display: block;
-            transition: color 0.3s, text-shadow 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: var(--primary-color);
-            text-shadow: 0 0 8px var(--primary-color);
-        }
-
-        /* HERO Bölümü */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            padding: 50px 0;
-            background: rgba(0, 0, 0, 0.6);
-        }
-
-        .hero-content {
-            max-width: 50%;
-            padding: 20px;
-            z-index: 10;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
-
-        .hero h2 {
-            font-size: 1.5rem;
-            color: var(--light-text);
-            margin-bottom: 20px;
-        }
-
-        .hero img {
-            max-width: 40%;
-            height: auto;
-            border: 5px solid var(--secondary-color);
-            box-shadow: 0 0 20px var(--secondary-color);
-            filter: grayscale(20%) brightness(120%);
-        }
-        
-        /* Müzik Oynatıcı */
-        #muzik-oynatici {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            width: 250px;
-            z-index: 1001;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 5px;
-            border-radius: 5px;
-        }
-
-        /* Tüm Ortak Bölümler */
-        section {
-            padding: 80px 0;
-            text-align: center;
-            background-color: rgba(26, 26, 46, 0.9); /* Koyu Arka Plan + Hafif Şeffaflık */
-            margin: 20px 0;
-            border: 1px solid var(--dark-bg);
-        }
-
-        section h2 {
-            font-size: 2rem;
-            margin-bottom: 40px;
-            border-bottom: 2px solid var(--secondary-color);
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
-        /* HAKKIMDA Bölümü */
-        .hakkinda p, .hakkinda h3 {
-            max-width: 800px;
-            margin: 20px auto;
-            text-align: left;
-            padding: 0 20px;
-        }
-        
-        .hakkinda h3 {
-            font-size: 1.2rem;
-            color: var(--primary-color);
-            margin-top: 30px;
-        }
-
-        /* PROJELER Bölümü */
-        .proje-listesi {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .proje-karti {
-            background-color: #2e2e4e;
-            color: var(--light-text);
-            padding: 30px;
-            width: 300px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 2px solid var(--primary-color);
-            font-family: var(--pixel-font);
-        }
-
-        .proje-karti:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 0 25px var(--primary-color);
-        }
-
-        /* İLETİŞİM & ABONELİK & Soru-Cevap */
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 400px;
-            margin: 0 auto 50px auto;
-            padding: 20px;
-            border: 2px solid var(--secondary-color);
-            border-radius: 10px;
-            background: #2e2e4e;
-        }
-
-        input[type="email"], textarea {
-            padding: 10px;
-            border: 1px solid var(--secondary-color);
-            background-color: #1a1a2e;
-            color: var(--light-text);
-            font-size: 1rem;
-            font-family: Arial, sans-serif;
-        }
-
-        button {
-            background-color: var(--primary-color);
-            color: #1a1a2e;
-            border: none;
-            padding: 12px 20px;
-            cursor: pointer;
-            font-family: var(--pixel-font);
-            font-size: 1rem;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #33ff99;
-        }
-        
-        /* Soru-Cevap Stil */
-        .soru-cevap-alan {
-            margin-top: 40px;
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-        }
-        
-        #cevap-alani {
-            margin-top: 20px;
-            border: 2px dashed var(--secondary-color);
-            padding: 15px;
-            min-height: 50px;
-            text-align: left;
-            font-family: var(--pixel-font);
-            font-size: 0.8rem;
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: rgba(0, 0, 0, 0.9);
-            color: var(--light-text);
-            border-top: 3px solid var(--primary-color);
-            font-family: var(--pixel-font);
-            font-size: 0.7rem;
-        }
-
-    </style>
-</head>
+    </head>
 <body>
 
-    <header>
-        <div class="logo">Emir's Bioverse</div>
-        <nav>
-            <ul>
-                <li><a href="#anasayfa">ANA SAYFA</a></li>
-                <li><a href="#hakkinda">HAKKIMDA</a></li>
-                <li><a href="#projeler">PROJELER</a></li>
-                <li><a href="#iletisim">İLETİŞİM</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <audio id="muzik-oynatici" controls loop autoplay>
-        <source src="fiberim-islak.mp3" type="audio/mpeg"> 
-        Tarayıcınız müziği desteklemiyor.
-    </audio>
-
-    <section id="anasayfa" class="hero">
-        <div class="hero-content">
-            <h1>Merhaba, Ben Emir!</h1>
-            <h2>Kıvırcık Saçlı Bir Yaratıcı ve Oyuncuyum.</h2>
-            <p style="font-family: Arial, sans-serif;">Bu site, ücretsiz stok görselleri ve yaratıcı fikirlerle tasarlandı.</p>
-        </div>
-        <img src="stok-gorsel.jpg" alt="Emir'in Çalışma Alanı Görseli">
-    </section>
-
-    <section id="hakkinda" class="hakkinda container">
-        <h2>BEN KİMİM? (Hakkımda)</h2>
-        <p>Selam! Ben **Emir**, 10 yaşındayım ve kıvırcık saçlarım var! Dünyayı keşfetmeye, kodlamaya ve yaratıcı işler yapmaya bayılıyorum. İşte benim hakkımdaki bazı havalı detaylar:</p>
-        
-        <h3>STEM ve Bilim Dünyası</h3>
-        <p>Fen ve teknolojiyi çok seviyorum. En son müthiş bir **STEM deneyi** yaptım. Bilim, hayatın nasıl çalıştığını anlamanın en eğlenceli yolu!</p>
-
-        <h3>Kodlama ve Scratch Ustalığı</h3>
-        <p>Bilgisayar başında zaman geçirmeyi ve kendi oyunlarımı yapmayı çok seviyorum. **Scratch** platformunda harika **projeler** geliştirdim. Kodlama, hayal gücümü gerçeğe dönüştürmenin sihirli yolu!</p>
-
-        <h3>LEGO Macerası</h3>
-        <p>**LEGO** benim yaratıcılık merkezim. Setleri bir araya getirmekten öte, kendi tasarımlarımı yapmayı, araçlar ve yapılar inşa etmeyi seviyorum. LEGO'lar, mühendisliği eğlenceli kılıyor!</p>
-    </section>
-
     <section id="projeler" class="projeler container">
-        <h2>PROJE GALERİSİ</h2>
-        <div class="proje-listesi">
-            <div class="proje-karti">SCRATCH: Kendi Platform Oyunum</div>
-            <div class="proje-karti">STEM: Yanardağ Deneyi</div>
-            <div class="proje-karti">LEGO: Mega Robot Tasarımı</div>
-            <div class="proje-karti">Daha Fazlası Gelecek!</div>
-        </div>
-    </section>
-
-    <section id="iletisim" class="iletisim container">
-        <h2>İLETİŞİM / ABONELİK / BANA SOR</h2>
+        <h2>PROJE VE ARAÇLAR</h2>
         
-        <h3>➡️ Emir'in Güncellemeleri İçin Abone Ol!</h3>
-        <form id="abonelik-formu">
-            <input type="email" placeholder="E-posta Adresin" required>
-            <button type="submit">ABONE OL: Gizli Projelere Erişim!</button>
-        </form>
+        <div class="sozluk-alani">
+            <h3>🔤 İngilizce - Türkçe Sözlük</h3>
+            <p>Aşağıdaki arama kutusunu kullanarak İngilizce kelimelerin Türkçe karşılıklarını hızlıca bulabilirsin. (Bu, Google'ın kendi arama işleviyle entegre bir arama kutusudur.)</p>
+            
+            <form action="https://www.google.com/search" method="GET" target="_blank" class="sozluk-form">
+                <input type="hidden" name="q" value="ingilizce türkçe sözlük ">
+                <input type="text" name="append_q" placeholder="Kelimeyi buraya yaz..." required>
+                <button type="submit">ARA</button>
+            </form>
+        </div>
 
-        <div class="soru-cevap-alan">
-            <h3>🤖 Emir'e Soru Sor</h3>
-            <textarea id="soru-kutusu" placeholder="Emir, en sevdiğin Fortnite karakteri kim?" rows="3"></textarea>
-            <button onclick="cevapVer()">CEVAP İSTE</button>
-            <div id="cevap-alani">Cevabınız burada belirecek...</div>
+        <style>
+            .sozluk-alani {
+                padding: 40px;
+                background-color: #0d0d1a;
+                border: 2px solid var(--secondary-color);
+                margin-bottom: 50px;
+                border-radius: 10px;
+            }
+            .sozluk-form {
+                flex-direction: row;
+                max-width: 600px;
+                gap: 10px;
+                padding: 15px;
+                background: none;
+                border: none;
+            }
+            .sozluk-form input[type="text"] {
+                flex-grow: 1;
+                padding: 15px;
+            }
+            .sozluk-form button {
+                width: 150px;
+            }
+
+            .oyun-listesi {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 50px;
+                margin-top: 50px;
+            }
+            .oyun-listesi iframe {
+                border: 5px solid var(--primary-color);
+                box-shadow: 0 0 15px var(--primary-color);
+                border-radius: 10px;
+            }
+        </style>
+
+        <h3>🎮 Emir'in Scratch Oyunları</h3>
+        <div class="oyun-listesi">
+            
+            <iframe 
+                src="https://scratch.mit.edu/projects/105500895/embed" 
+                allowtransparency="true" 
+                width="485" 
+                height="402" 
+                frameborder="0" 
+                scrolling="no" 
+                allowfullscreen>
+            </iframe>
+
+            <iframe 
+                src="https://scratch.mit.edu/projects/1102309342/embed" 
+                allowtransparency="true" 
+                width="485" 
+                height="402" 
+                frameborder="0" 
+                scrolling="no" 
+                allowfullscreen>
+            </iframe>
+
         </div>
     </section>
 
-    <footer>
-        <p>Tasarım & Kodlama: Emir | &copy; 2024 - Tüm Hakları Saklıdır.</p>
-    </footer>
-
-    <script>
-        // Müzik Oynatıcıyı Otomatik Başlatma İsteği (Tarayıcılar Otomatik Oynatmayı Engelleyebilir)
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const muzikOynatici = document.getElementById('muzik-oynatici');
-            muzikOynatici.volume = 0.5; // Ses seviyesini ayarlama
-            // muzikOynatici.play(); // Çoğu tarayıcı kullanıcı etkileşimi olmadan bunu engeller.
-        });
-
-        // ----------------------------------------------------
-        // ABONELİK SİSTEMİ (Simülasyon)
-        // ----------------------------------------------------
-        document.getElementById('abonelik-formu').addEventListener('submit', function(e) {
-            e.preventDefault(); // Sayfanın yeniden yüklenmesini engelle
-            const email = e.target.querySelector('input[type="email"]').value;
-            
-            alert(`Teşekkürler, ${email} adresi başarıyla abone oldu! Yeni projeler mail kutuna geliyor.`);
-            e.target.reset(); // Formu temizle
-        });
-
-        // ----------------------------------------------------
-        // SORU-CEVAP SİSTEMİ (Simülasyon)
-        // ----------------------------------------------------
-        function cevapVer() {
-            const soru = document.getElementById('soru-kutusu').value.trim().toLowerCase();
-            const cevapAlani = document.getElementById('cevap-alani');
-            
-            if (soru === "") {
-                cevapAlani.innerHTML = "Lütfen bir soru yaz!";
-                return;
-            }
-
-            // Basit Anahtar Kelimeye Dayalı Cevaplar
-            let cevap = "Bu soruyu düşünmem gerekiyor. Biraz karmaşık gibi! 🤔";
-
-            if (soru.includes("yaşın")) {
-                cevap = "Ben 10 yaşındayım. Daha çok eğlence, daha çok proje!";
-            } else if (soru.includes("saçın")) {
-                cevap = "Evet, kıvırcık saçlıyım. Çok havalı, değil mi?";
-            } else if (soru.includes("stem") || soru.includes("deney")) {
-                cevap = "STEM deneyleri harika! En sevdiğim, kimyasal reaksiyonları izlemek.";
-            } else if (soru.includes("scratch")) {
-                cevap = "Scratch'te kendi platform oyunumu yapıyorum. Kodlama çok eğlenceli!";
-            } else if (soru.includes("lego")) {
-                cevap = "LEGO'lar sonsuz yaratıcılık demek. Şu anda dev bir uzay üssü tasarlıyorum.";
-            } else if (soru.includes("fortnite")) {
-                cevap = "Fortnite'ta en sevdiğim karakter Peely! Muz güçtür! 🍌";
-            } else if (soru.includes("kodlama") || soru.includes("programlama")) {
-                cevap = "Kodlama, geleceğin dili! Sen de öğrenmelisin.";
-            }
-
-            cevapAlani.innerHTML = `**Sordun:** ${soru}<br><br>**Emir'in Cevabı:** ${cevap}`;
-        }
-    </script>
-</body>
-</html>sMinecraft ne zaman cıktı
+    </body>
+</html>
