@@ -1,86 +1,93 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    </head>
-<body>
+/* MEVCUT TÜM CSS KODLARINIZ BURADA BİTİYOR... */
 
-    <section id="projeler" class="projeler container">
-        <h2>PROJE VE ARAÇLAR</h2>
-        
-        <div class="sozluk-alani">
-            <h3>🔤 İngilizce - Türkçe Sözlük</h3>
-            <p>Aşağıdaki arama kutusunu kullanarak İngilizce kelimelerin Türkçe karşılıklarını hızlıca bulabilirsin. (Bu, Google'ın kendi arama işleviyle entegre bir arama kutusudur.)</p>
-            
-            <form action="https://www.google.com/search" method="GET" target="_blank" class="sozluk-form">
-                <input type="hidden" name="q" value="ingilizce türkçe sözlük ">
-                <input type="text" name="append_q" placeholder="Kelimeyi buraya yaz..." required>
-                <button type="submit">ARA</button>
-            </form>
-        </div>
+/* ---------------------------------------------------- */
+/* 900px ve Altı Ekranlar İçin Duyarlı Ayarlar */
+/* ---------------------------------------------------- */
+@media (max-width: 900px) {
+    
+    .hero {
+        flex-direction: column; /* Hero bölümünü dikey yap */
+        height: auto;
+        padding-top: 100px; /* Header altından başla */
+    }
 
-        <style>
-            .sozluk-alani {
-                padding: 40px;
-                background-color: #0d0d1a;
-                border: 2px solid var(--secondary-color);
-                margin-bottom: 50px;
-                border-radius: 10px;
-            }
-            .sozluk-form {
-                flex-direction: row;
-                max-width: 600px;
-                gap: 10px;
-                padding: 15px;
-                background: none;
-                border: none;
-            }
-            .sozluk-form input[type="text"] {
-                flex-grow: 1;
-                padding: 15px;
-            }
-            .sozluk-form button {
-                width: 150px;
-            }
+    .hero-content {
+        max-width: 100%;
+        text-align: center;
+        padding: 40px 20px;
+    }
 
-            .oyun-listesi {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 50px;
-                margin-top: 50px;
-            }
-            .oyun-listesi iframe {
-                border: 5px solid var(--primary-color);
-                box-shadow: 0 0 15px var(--primary-color);
-                border-radius: 10px;
-            }
-        </style>
+    .hero h1 {
+        font-size: 2rem; /* Başlık boyutunu küçült */
+    }
+    
+    .hero img {
+        max-width: 80%; /* Görseli küçült */
+        margin-bottom: 50px;
+    }
 
-        <h3>🎮 Emir'in Scratch Oyunları</h3>
-        <div class="oyun-listesi">
-            
-            <iframe 
-                src="https://scratch.mit.edu/projects/105500895/embed" 
-                allowtransparency="true" 
-                width="485" 
-                height="402" 
-                frameborder="0" 
-                scrolling="no" 
-                allowfullscreen>
-            </iframe>
+    /* Proje kartlarını tek sütun yap */
+    .proje-listesi {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
 
-            <iframe 
-                src="https://scratch.mit.edu/projects/1102309342/embed" 
-                allowtransparency="true" 
-                width="485" 
-                height="402" 
-                frameborder="0" 
-                scrolling="no" 
-                allowfullscreen>
-            </iframe>
+    .proje-karti {
+        width: 80%;
+    }
+}
 
-        </div>
-    </section>
 
-    </body>
-</html>
+/* ---------------------------------------------------- */
+/* 768px ve Altı Ekranlar İçin Mobil Menü Ayarı */
+/* ---------------------------------------------------- */
+@media (max-width: 768px) {
+    
+    header {
+        flex-direction: column; /* Header'ı dikey hizala */
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    .logo {
+        margin: 10px 0;
+    }
+
+    nav ul {
+        flex-direction: column; /* Menü linklerini dikey yap */
+        width: 100%;
+    }
+
+    nav ul li a {
+        padding: 10px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Sözlük formu ve Soru-Cevap formunu tam genişlik yap */
+    .sozluk-form, #abonelik-formu, .soru-cevap-alan {
+        max-width: 90%;
+    }
+    
+    /* Sözlük formu düğmelerini ve kutuyu alt alta getir */
+    .sozluk-form {
+        flex-direction: column;
+    }
+    .sozluk-form button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+
+/* ---------------------------------------------------- */
+/* 500px ve Altı Ekranlar İçin Oyun Çerçevesi Ayarı */
+/* ---------------------------------------------------- */
+@media (max-width: 500px) {
+    .oyun-listesi iframe {
+        /* Ekran 500px'ten küçükse, iframe'leri daha da küçült */
+        width: 100%;
+        height: 300px; /* Yüksekliği düşür */
+        border: 3px solid var(--primary-color);
+    }
+}
