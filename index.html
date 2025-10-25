@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emir'in Biyografi ve Proje Merkezi | Minimalist</title>
+    <title>Emir'in Biyografi ve Proje Merkezi | Minimalist Siber</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     
@@ -226,41 +226,86 @@
             max-width: 100%;
         }
 
-        /* İLETİŞİM & ABONELİK & Soru-Cevap */
+        /* İLETİŞİM & ABONELİK */
         .iletisim-modul {
             display: flex;
             flex-direction: column;
             gap: 30px;
         }
         
-        #abonelik-formu, .soru-cevap-alan {
+        #abonelik-formu {
             padding: 20px;
             background: var(--module-bg);
             border-radius: 5px;
-        }
-        
-        #abonelik-formu {
             display: flex;
             gap: 10px;
             max-width: 500px;
             margin: 10px auto;
         }
 
-        /* Soru-Cevap Stil */
+        /* ESKİ Soru-Cevap alanını gizle (yerine Chat-CAT gelecek) */
         .soru-cevap-alan {
+            display: none; 
+        }
+
+        /* Yeni Chat Modülü Stili (Chat-CAT) */
+        .chat-container {
             max-width: 500px;
             margin: 20px auto;
+            padding: 20px;
+            background: var(--dark-bg);
+            border: 2px solid var(--primary-color); /* Neon yeşil çerçeve */
+            border-radius: 8px;
+            box-shadow: 0 0 10px var(--primary-color);
         }
-        
-        #cevap-alani {
-            margin-top: 20px;
-            border: 2px dashed var(--secondary-color);
-            padding: 15px;
-            min-height: 50px;
-            text-align: left;
-            font-family: var(--main-font);
+
+        .chat-box {
+            height: 300px; /* Sohbet penceresi yüksekliği */
+            overflow-y: auto;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: var(--module-bg);
+            border: 1px solid var(--secondary-color);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-message {
+            padding: 8px 12px;
+            border-radius: 15px;
+            max-width: 80%;
             font-size: 0.9rem;
-            background-color: var(--dark-bg);
+            font-family: var(--main-font);
+            line-height: 1.4;
+            word-wrap: break-word; 
+        }
+
+        /* Kullanıcı Mesajı (Mavi Tonlar, Sağda) */
+        .user-message {
+            align-self: flex-end;
+            background-color: #007bff; 
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        /* Bot Mesajı (Neon Yeşil Tonlar, Solda) */
+        .bot-message {
+            align-self: flex-start;
+            background-color: rgba(57, 255, 20, 0.2); 
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-input-form {
+            display: flex;
+            gap: 10px;
+        }
+        .chat-input-form input[type="text"] {
+            flex-grow: 1;
+            border: 1px solid var(--primary-color);
         }
         
         /* Footer */
@@ -310,19 +355,19 @@
                 border-top: 1px solid rgba(255, 255, 255, 0.1);
             }
 
-            .sozluk-form, #abonelik-formu {
+            .sozluk-form, #abonelik-formu, .chat-input-form {
                 flex-direction: column;
                 width: 90%;
             }
-            .sozluk-form button, #abonelik-formu button {
+            .sozluk-form button, #abonelik-formu button, .chat-input-form button {
                 width: 100%;
                 margin-top: 10px;
             }
             
             /* Oyun Çerçevelerini Küçültme */
             .oyun-listesi iframe {
-                width: 95%; /* Yan boşluk bırakarak tam genişlik kullan */
-                height: 300px; /* Yüksekliği düşür */
+                width: 95%; 
+                height: 300px; 
             }
         }
 
@@ -425,13 +470,18 @@
                 <button type="submit">ABONE OL</button>
             </form>
 
-            <div class="soru-cevap-alan">
-                <h3>🤖 EMIR'E SIBER SORU SOR</h3>
-                <textarea id="soru-kutusu" placeholder="Örn: En sevdiğin LEGO serisi nedir?" rows="3" style="width: 100%;"></textarea>
-                <button onclick="cevapVer()">CEVAP AL</button>
-                <div id="cevap-alani">Cevabın burada piksel piksel belirecek...</div>
+            <div class="chat-container">
+                <h3>💬 EMIR'İN SİBER ASİSTANI [Chat-CAT]</h3>
+                <div class="chat-box" id="chat-kutu">
+                    <div class="chat-message bot-message">Sistem: Hoş geldin! Emir'in projeleri, hobileri (STEM, LEGO, Scratch) hakkında sorular sorabilirsin.</div>
+                </div>
+
+                <form class="chat-input-form" id="chat-formu">
+                    <input type="text" id="chat-input" placeholder="Mesajını buraya yaz..." required>
+                    <button type="submit">GÖNDER</button>
+                </form>
             </div>
-        </div>
+            </div>
     </section>
 
     <footer>
@@ -457,37 +507,66 @@
         });
 
         // ----------------------------------------------------
-        // SORU-CEVAP SİSTEMİ (Simülasyon)
+        // CHAT CAT SİSTEMİ (Sohbet Robotu Mantığı)
         // ----------------------------------------------------
-        function cevapVer() {
-            const soru = document.getElementById('soru-kutusu').value.trim().toLowerCase();
-            const cevapAlani = document.getElementById('cevap-alani');
-            
-            if (soru === "") {
-                cevapAlani.innerHTML = "HATACode:001 - Lütfen sorgu metnini girin.";
-                return;
-            }
+        document.getElementById('chat-formu').addEventListener('submit', function(e) {
+            e.preventDefault();
+            gonderChatMesaji();
+        });
 
-            // Gelişmiş Anahtar Kelimeye Dayalı Cevaplar
-            let cevap = "Sorgu Anlaşılamadı. Lütfen STEM, Scratch, LEGO veya Biyografi konularında tekrar deneyin.";
+        function ekleMesaj(mesaj, tip) {
+            const chatKutu = document.getElementById('chat-kutu');
+            const mesajDiv = document.createElement('div');
+            mesajDiv.className = `chat-message ${tip}-message`;
+            mesajDiv.innerHTML = mesaj; // HTML içeriğini de desteklemesi için innerHTML
+
+            chatKutu.appendChild(mesajDiv);
+
+            // Otomatik aşağı kaydırma
+            chatKutu.scrollTop = chatKutu.scrollHeight;
+        }
+
+        function gonderChatMesaji() {
+            const inputAlan = document.getElementById('chat-input');
+            const soru = inputAlan.value.trim();
+
+            if (soru === "") return;
+
+            // 1. Kullanıcının Mesajını Ekle
+            ekleMesaj(soru, 'user');
+            inputAlan.value = ''; // Input'u temizle
+
+            // 2. Botun Cevabını Hesapla ve Ekle
+            const botCevabi = botCevapUret(soru.toLowerCase());
+
+            // Bot cevabını biraz gecikmeli ver (Daha gerçekçi hissettirir)
+            setTimeout(() => {
+                ekleMesaj(botCevabi, 'bot');
+            }, 800);
+        }
+
+        function botCevapUret(soru) {
+            let cevap = "Hata: Bilgi Tabanında bu konuda yeterli veri yok. STEM, Scratch, LEGO veya Biyografi konularında tekrar deneyin.";
 
             if (soru.includes("yaşın")) {
                 cevap = "Veri: 10 yıl. Gelişim süreci devam ediyor.";
             } else if (soru.includes("saçın") || soru.includes("kıvırcık")) {
                 cevap = "Doğrulandı: Saç yapısı kıvırcık. %100 doğruluk.";
             } else if (soru.includes("stem") || soru.includes("deney")) {
-                cevap = "STEM, geleceğin teknolojisidir. Bir sonraki deneyim [Yeni Fikir]'i test etmek olacak.";
-            } else if (soru.includes("scratch") || soru.includes("kodlama")) {
-                cevap = "Scratch Projesi: Şu anki hedefim, daha karmaşık yapay zeka davranışları kodlamak.";
+                cevap = "STEM, geleceğin teknolojisidir. Bir sonraki deneyim **[Yeni Fikir]**'i test etmek olacak. Bilim, dünyayı çözmek demek!";
+            } else if (soru.includes("scratch") || soru.includes("kodlama") || soru.includes("oyun")) {
+                cevap = "Scratch Projesi: Şu anki hedefim, daha karmaşık yapay zeka davranışları kodlamak. <a href='#projeler' style='color: var(--secondary-color); text-decoration: none;'>Projelerimi incele!</a>";
             } else if (soru.includes("lego")) {
-                cevap = "LEGO: Yaratıcılık limitleri sıfır. Favori serim [En Sevdiğiniz LEGO Serisi].";
-            } else if (soru.includes("fortnite") || soru.includes("oyun")) {
-                cevap = "Fortnite: Oynanış süresi: [Saat]. Favori Kaplama: [Kaplama Adı].";
-            } else if (soru.includes("fiberim ıslak")) {
-                cevap = "Müzik Sorgusu: 'Fiberim Islak' çalınıyor. Ses düzeyi %30.";
+                cevap = "LEGO: Yaratıcılık limitleri sıfır. Favori serim **[En Sevdiğiniz LEGO Serisi]**. Sende var mı?";
+            } else if (soru.includes("fortnite")) {
+                cevap = "Fortnite: Oynanış süresi: **[Saat]**. Favori Kaplama: **[Kaplama Adı]**.";
+            } else if (soru.includes("fiberim ıslak") || soru.includes("müzik")) {
+                cevap = "Müzik Sorgusu: 'Fiberim Islak' çalınıyor. Ses düzeyi %30. Beğendin mi?";
+            } else if (soru.includes("merhaba") || soru.includes("selam")) {
+                cevap = "Merhaba! Sistemi yüklediğin için teşekkür ederim. Nasıl yardımcı olabilirim?";
             }
 
-            cevapAlani.innerHTML = `**SORGULANDI:** ${soru}<br><br>**EMIR-AI CEVAP:** ${cevap}`;
+            return cevap;
         }
     </script>
 </body>
